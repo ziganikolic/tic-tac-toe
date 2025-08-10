@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn {
+  @apply px-4 py-2 rounded bg-fuchsia-600 text-white hover:bg-fuchsia-700 transition-colors;
+}

@@ -1,6 +1,6 @@
 <template>
-  <div class="p-4 flex flex-col gap-4 items-center">
-    <h1 class="text-2xl">Ultimate Tic Tac Toe</h1>
+  <div class="min-h-screen flex flex-col gap-6 items-center justify-center text-center">
+    <h1 class="text-3xl font-bold">Ultimate Tic Tac Toe</h1>
     <router-link to="/lobby" class="btn">Play Online</router-link>
     <button class="btn" @click="playLocal">Play Local (Hot-seat)</button>
     <router-link to="/how" class="btn">How to Play</router-link>
@@ -8,8 +8,14 @@
 </template>
 
 <script setup lang="ts">
-// TODO: hot-seat setup
+import { useRouter } from 'vue-router';
+import { useGameStore } from '../stores/game';
+
+const router = useRouter();
+const game = useGameStore();
+
 function playLocal() {
-  // TODO: init local game and navigate to RoomView
+  game.startLocalGame();
+  router.push('/room/local');
 }
 </script>

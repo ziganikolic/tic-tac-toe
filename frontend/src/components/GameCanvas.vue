@@ -1,25 +1,31 @@
 <template>
-  <div ref="gameContainer" class="w-full h-full"></div>
+  <div
+    v-if="board"
+    class="grid gap-1 p-4 mx-auto"
+    :style="{ gridTemplateColumns: `repeat(${board.size}, minmax(0,1fr))` }"
+  >
+    <div
+      v-for="cell in board.cells"
+      :key="`${cell.row}-${cell.col}`"
+      class="w-16 h-16 border border-gray-500 flex items-center justify-center text-2xl cursor-pointer select-none"
+      @click="onCellClick(cell)"
+    >
+      {{ cell.value }}
+    </div>
+  </div>
+  <div v-else class="p-4 text-center">No game state</div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
-import Phaser from 'phaser';
-import type { GameState } from '../stores/game';
+import { computed } from 'vue';
+import type { GameState, Cell } from '../stores/game';
 
 const props = defineProps<{ state: GameState | null }>();
-const emit = defineEmits<{ (e: 'move', payload: any): void }>();
+const emit = defineEmits<{ (e: 'move', payload: Cell): void }>();
 
-const gameContainer = ref<HTMLDivElement | null>(null);
-let phaserGame: Phaser.Game | null = null;
+const board = computed(() => props.state?.boards[0] || null);
 
-onMounted(() => {
-  // TODO: init Phaser scene with props.state
-});
-
-watch(() => props.state, state => {
-  // TODO: update scene on state change
-});
-
-// TODO: handle resize, pointer events -> emit('move')
+function onCellClick(cell: Cell) {
+  emit('move', cell);
+}
 </script>

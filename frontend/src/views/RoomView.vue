@@ -12,7 +12,12 @@ import { useGameStore } from '../stores/game';
 
 const game = useGameStore();
 
-function onMove(move: any) {
-  // TODO: call game.submitMove
+function onMove(cell: { row: number; col: number }) {
+  if (!game.state) return;
+  game.submitMove({
+    mini: { row: 0, col: 0 },
+    cell,
+    moveIndex: game.state.moveIndex + 1
+  });
 }
 </script>
