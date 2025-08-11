@@ -9,9 +9,14 @@ return new class extends Migration {
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->json('state');
-            $table->foreignId('x_user_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('o_user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->string('room_id');
+            $table->foreignId('user_x')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('user_o')->nullable()->constrained('users')->nullOnDelete();
+            $table->enum('winner', ['X', 'O', 'DRAW'])->nullable();
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('ended_at')->nullable();
+            $table->unsignedBigInteger('duration_ms')->nullable();
+            $table->json('rules_json')->nullable();
             $table->timestamps();
         });
     }
