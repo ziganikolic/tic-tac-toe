@@ -11,11 +11,12 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('game_id')->constrained('games')->cascadeOnDelete();
             $table->unsignedInteger('move_index');
-            $table->char('player', 1);
-            $table->unsignedTinyInteger('mini_row');
-            $table->unsignedTinyInteger('mini_col');
-            $table->unsignedTinyInteger('cell_row');
-            $table->unsignedTinyInteger('cell_col');
+            $table->unsignedTinyInteger('mini_r');
+            $table->unsignedTinyInteger('mini_c');
+            $table->unsignedTinyInteger('cell_r');
+            $table->unsignedTinyInteger('cell_c');
+            $table->enum('by', ['X', 'O']);
+            $table->unsignedBigInteger('ts_ms');
             $table->timestamps();
         });
     }
