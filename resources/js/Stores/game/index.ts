@@ -13,7 +13,7 @@ export const useGameStore = defineStore('game', {
     error: null as string | null,
   }),
   actions: {
-    async fetchState(roomId: string) {
+    async fetchState(roomId: number) {
       this.pending = true
       this.error = null
       try {
