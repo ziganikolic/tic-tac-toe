@@ -14,8 +14,10 @@ function playOnline() {
   router.visit('/lobby')
 }
 
-function playLocal() {
-  router.visit('/room/local')
+async function playLocal() {
+  const res = await fetch('/api/rooms', { method: 'POST' })
+  const data = await res.json()
+  router.visit(`/room/${data.id}`)
 }
 
 function howTo() {
