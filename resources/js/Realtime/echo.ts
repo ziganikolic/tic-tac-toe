@@ -1,16 +1,8 @@
 import Echo from 'laravel-echo'
+import Pusher from 'pusher-js'
 
-// TODO: Initialize Echo using Reverb env variables (VITE_REVERB_*)
-// Example configuration:
-// export const echo = new Echo({
-//   broadcaster: 'reverb',
-//   key: import.meta.env.VITE_REVERB_APP_KEY,
-//   wsHost: import.meta.env.VITE_REVERB_HOST,
-//   wsPort: parseInt(import.meta.env.VITE_REVERB_PORT || '443'),
-//   wssPort: parseInt(import.meta.env.VITE_REVERB_PORT || '443'),
-//   forceTLS: false,
-//   enabledTransports: ['ws', 'wss'],
-// })
+// Make the Pusher client available for Echo
+;(window as any).Pusher = Pusher
 
 export const echo = new Echo({
   broadcaster: 'reverb',
