@@ -6,6 +6,18 @@ class MoveValidator
 {
     public function validate(array $state, array $move): bool
     {
+        if ($state['over']) {
+            return false;
+        }
+
+        if ($move['moveIndex'] !== $state['moveIndex'] + 1) {
+            return false;
+        }
+
+        if (($move['player'] ?? null) !== $state['current']) {
+            return false;
+        }
+
         $mega = $state['rules']['megaSize'];
         $mini = $state['rules']['miniSize'];
 
@@ -33,8 +45,11 @@ class MoveValidator
         }
 
         $active = $state['mega']['activeMini'];
-        if ($active && ($active['row'] !== $mr || $active['col'] !== $mc)) {
-            return false;
+        if ($active) {
+            $forced = $state['mega']['boards'][$active['row']][$active['col']];
+            if (! $forced['isClosed'] && ($active['row'] !== $mr || $active['col'] !== $mc)) {
+                return false;
+            }
         }
 
         return true;

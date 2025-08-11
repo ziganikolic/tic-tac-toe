@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Game;
 
-use App\Events\StateSynced;
 use App\Http\Controllers\Controller;
 use App\Services\Game\MoveValidator;
 use App\Services\Game\StateStore;
@@ -16,7 +15,7 @@ class RoomController extends Controller
 
     public function show(int $room)
     {
-        return response()->json($this->store->get($room));
+        return response()->json($this->store->getState($room));
     }
 
     public function storeMove(Request $request, int $room)
@@ -28,7 +27,7 @@ class RoomController extends Controller
             'cell.col' => 'required|integer|min:0',
         ]);
 
-        $state = $this->store->get($room);
+        $state = $this->store->getState($room);
         $move = [
             'mini' => ['row' => $data['mini']['row'], 'col' => $data['mini']['col']],
             'cell' => ['row' => $data['cell']['row'], 'col' => $data['cell']['col']],
@@ -41,7 +40,7 @@ class RoomController extends Controller
         }
 
         $state = $this->store->applyMove($room, $move);
-        broadcast(new StateSynced($room, $state))->toOthers();
+        $this->store->broadcastState($room, $state);
 
         return response()->json($state);
     }
