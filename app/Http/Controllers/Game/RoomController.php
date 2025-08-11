@@ -13,12 +13,29 @@ class RoomController extends Controller
     {
     }
 
+    public function create()
+    {
+        $room = random_int(100000, 999999);
+        $state = $this->store->getState($room);
+        $this->store->saveState($room, $state);
+
+        return response()->json(['id' => $room, 'state' => $state]);
+    }
+
     public function show(int $room)
     {
         return response()->json($this->store->getState($room));
     }
 
-    public function storeMove(Request $request, int $room)
+    public function join(int $room)
+    {
+        $state = $this->store->getState($room);
+        $this->store->saveState($room, $state);
+
+        return response()->json($state);
+    }
+
+    public function move(Request $request, int $room)
     {
         $data = $request->validate([
             'mini.row' => 'required|integer|min:0',
@@ -43,6 +60,11 @@ class RoomController extends Controller
         $this->store->broadcastState($room, $state);
 
         return response()->json($state);
+    }
+
+    public function leave(int $room)
+    {
+        return response()->json(['left' => true]);
     }
 }
 
