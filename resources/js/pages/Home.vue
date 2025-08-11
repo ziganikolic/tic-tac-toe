@@ -15,9 +15,16 @@ function playOnline() {
 }
 
 async function playLocal() {
-  const res = await fetch('/api/rooms', { method: 'POST' })
-  const data = await res.json()
-  router.visit(`/room/${data.id}`)
+  try {
+    const res = await fetch('/api/rooms', { method: 'POST' })
+    if (!res.ok) {
+      throw new Error('Room creation failed')
+    }
+    const data = await res.json()
+    router.visit(`/room/${data.id}`)
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 function howTo() {
