@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GameCanvas from '@/components/GameCanvas.vue';
+import SimpleGameBoard from '@/components/SimpleGameBoard.vue';
 import Heading from '@/components/Heading.vue';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -42,13 +42,13 @@ const breadcrumbs: BreadcrumbItem[] = [
                     </div>
                 </TabsContent>
                 <TabsContent value="game" class="flex-1">
-                    <div class="flex h-full flex-col gap-4 md:flex-row">
-                        <div class="space-y-4 md:w-1/2">
+                    <div class="flex h-full flex-col gap-4">
+                        <div class="space-y-4 text-center">
                             <Heading title="Ultimate Tic-Tac-Toe" description="Play the classic game with a twist." />
-                            <p class="text-sm text-muted-foreground">Click a cell to make your move.</p>
+                            <p class="text-sm text-muted-foreground">Click a cell to make your move. Each move determines where your opponent must play next!</p>
                         </div>
-                        <div class="relative aspect-square flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                            <GameCanvas />
+                        <div class="flex-1 flex items-center justify-center">
+                            <SimpleGameBoard />
                         </div>
                     </div>
                 </TabsContent>

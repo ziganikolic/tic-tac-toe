@@ -30,7 +30,8 @@ class StateStore
 
     public function broadcastState(int $roomId, array $state): void
     {
-        broadcast(new StateSynced($roomId, $state))->toOthers();
+        \Log::info("Broadcasting state to room {$roomId}");
+        broadcast(new StateSynced($roomId, $state));
     }
 
     protected function fresh(): array

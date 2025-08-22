@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -16,9 +16,9 @@ class StateSynced implements ShouldBroadcast
     {
     }
 
-    public function broadcastOn(): PresenceChannel
+    public function broadcastOn(): Channel
     {
-        return new PresenceChannel("room.{$this->roomId}");
+        return new Channel("room.{$this->roomId}");
     }
 
     public function broadcastAs(): string

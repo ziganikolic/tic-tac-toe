@@ -11,7 +11,11 @@ Route::get('/lobby', function () {
     return Inertia::render('Lobby');
 })->name('lobby');
 
-Route::get('/room/{room}', function (int $room) {
+Route::get('/how-to', function () {
+    return Inertia::render('HowToPlay');
+})->name('how-to');
+
+Route::get('/room/{room}', function (string $room) {
     return Inertia::render('Room', ['room' => $room]);
 })->name('room');
 

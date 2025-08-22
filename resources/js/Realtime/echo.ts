@@ -4,12 +4,15 @@ import Pusher from 'pusher-js'
 // Make the Pusher client available for Echo
 ;(window as any).Pusher = Pusher
 
+console.log('Echo config (Pusher):', {
+  key: import.meta.env.VITE_PUSHER_APP_KEY,
+  cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+  forceTLS: (import.meta.env.VITE_PUSHER_SCHEME || 'https') === 'https',
+})
+
 export const echo = new Echo({
-  broadcaster: 'reverb',
-  key: import.meta.env.REVERB_APP_KEY,
-  wsHost: import.meta.env.REVERB_HOST ?? window.location.hostname,
-  wsPort: Number(import.meta.env.REVERB_PORT) || 6001,
-  wssPort: Number(import.meta.env.REVERB_PORT) || 6001,
-  forceTLS: import.meta.env.REVERB_SCHEME === 'https',
-  enabledTransports: ['ws', 'wss'],
+  broadcaster: 'pusher',
+  key: import.meta.env.VITE_PUSHER_APP_KEY,
+  cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+  forceTLS: (import.meta.env.VITE_PUSHER_SCHEME || 'https') === 'https',
 })
