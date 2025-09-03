@@ -31,7 +31,12 @@ class StateStore
     public function broadcastState(int $roomId, array $state): void
     {
         \Log::info("Broadcasting state to room {$roomId}");
-        broadcast(new StateSynced($roomId, $state));
+        try {
+            broadcast(new StateSynced($roomId, $state))->via('reverb');
+        } catch (\Exception $e) {
+            \Log::error("Broadcasting failed: " . $e->getMessage());
+            // Don't let broadcasting failures prevent the game from working
+        }
     }
 
     protected function fresh(): array
