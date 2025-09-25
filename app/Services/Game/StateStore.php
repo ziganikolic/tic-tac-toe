@@ -32,7 +32,7 @@ class StateStore
     {
         \Log::info("Broadcasting state to room {$roomId}");
         try {
-            broadcast(new StateSynced($roomId, $state))->via('reverb');
+            broadcast(new StateSynced($roomId, $state))->via('ably');
         } catch (\Exception $e) {
             \Log::error("Broadcasting failed: " . $e->getMessage());
             // Don't let broadcasting failures prevent the game from working
@@ -118,9 +118,11 @@ class StateStore
             $state['over'] = true;
         }
 
-        $state['mega']['activeMini'] = $mini['isClosed']
-            ? null
-            : ['row' => $cr, 'col' => $cc];
+        $targetBoard = $state['mega']['boards'][$cr][$cc] ?? null;
+
+        $state['mega']['activeMini'] = ($targetBoard && ! $targetBoard['isClosed'])
+            ? ['row' => $cr, 'col' => $cc]
+            : null;
 
         if (! $state['over']) {
             $state['current'] = $state['current'] === 'X' ? 'O' : 'X';
@@ -225,4 +227,3 @@ class StateStore
         return true;
     }
 }
-

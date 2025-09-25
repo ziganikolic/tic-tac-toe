@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-    envPrefix: ['VITE_', 'REVERB_'],
+    envPrefix: ['VITE_', 'ABLY_'],
     plugins: [
         laravel({
             input: ['resources/js/app.ts'],
@@ -21,4 +21,11 @@ export default defineConfig({
             },
         }),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: undefined,
+            },
+        },
+    },
 });
