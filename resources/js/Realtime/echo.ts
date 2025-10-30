@@ -1,26 +1,27 @@
 import Echo from 'laravel-echo'
 import Pusher from 'pusher-js'
 
-// Make the Pusher client available globally for Echo's Ably connector
+// Make the Pusher client available globally for Echo's Reverb connector
 ;(window as any).Pusher = Pusher
 
-const ablyKey = import.meta.env.VITE_ABLY_KEY
-  ? String(import.meta.env.VITE_ABLY_KEY).split(':')[0]
-  : undefined
+const reverbAppKey = import.meta.env.VITE_REVERB_APP_KEY
+const reverbHost = import.meta.env.VITE_REVERB_HOST
+const reverbPort = import.meta.env.VITE_REVERB_PORT
+const reverbScheme = import.meta.env.VITE_REVERB_SCHEME
 
-if (!ablyKey) {
-  console.warn('VITE_ABLY_KEY is missing; realtime features will be disabled.')
+if (!reverbAppKey) {
+  console.warn(
+    'VITE_REVERB_APP_KEY is missing; realtime features will be disabled.',
+  )
 }
 
 export const echo = new Echo({
-  broadcaster: 'ably',
-  key: ablyKey,
-  wsHost: 'realtime.ably.io',
-  wsPort: 80,
-  wssPort: 443,
-  httpHost: 'rest.ably.io',
-  forceTLS: true,
-  disableStats: true,
+  broadcaster: 'reverb',
+  key: reverbAppKey,
+  wsHost: reverbHost,
+  wsPort: reverbPort ?? 443,
+  wssPort: reverbPort ?? 443,
+  forceTLS: (reverbScheme ?? 'https') === 'https',
   enabledTransports: ['ws', 'wss'],
 })
 
@@ -30,15 +31,15 @@ const connector = (echo as any)?.connector as {
 
 if (connector?.pusher?.connection) {
   connector.pusher.connection.bind('state_change', (states: any) => {
-    console.debug('Ably connection state change:', states)
+    console.debug('Reverb connection state change:', states)
   })
 
   connector.pusher.connection.bind('connected', () => {
-    console.info('Ably connection established')
+    console.info('Reverb connection established')
   })
 
   connector.pusher.connection.bind('error', (error: any) => {
-    console.error('Ably connection error:', error)
+    console.error('Reverb connection error:', error)
   })
 } else {
   console.warn('Echo connector not ready; realtime diagnostics unavailable')

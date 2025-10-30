@@ -1,18 +1,19 @@
 <?php
 
 return [
-    'default' => env('BROADCAST_CONNECTION', env('ABLY_KEY') ? 'ably' : 'log'),
+    'default' => env('BROADCAST_CONNECTION', 'reverb'),
 
     'connections' => [
-        'ably' => [
-            'driver' => 'ably',
-            'key' => env('ABLY_KEY', env('PUSHER_APP_KEY')),
-        ],
-
-        // Backwards compatible alias so old BROADCAST_CONNECTION=pusher configs still work.
-        'pusher' => [
-            'driver' => 'ably',
-            'key' => env('ABLY_KEY', env('PUSHER_APP_KEY')),
+        'reverb' => [
+            'driver' => 'reverb',
+            'key' => env('REVERB_APP_KEY'),
+            'secret' => env('REVERB_APP_SECRET'),
+            'app_id' => env('REVERB_APP_ID'),
+            'options' => [
+                'host' => env('REVERB_HOST'),
+                'port' => env('REVERB_PORT', 443),
+                'scheme' => env('REVERB_SCHEME', 'https'),
+            ],
         ],
 
         'log' => [

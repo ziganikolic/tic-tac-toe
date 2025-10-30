@@ -32,7 +32,7 @@ class StateStore
     {
         \Log::info("Broadcasting state to room {$roomId}");
         try {
-            broadcast(new StateSynced($roomId, $state))->via('ably');
+            broadcast(new StateSynced($roomId, $state));
         } catch (\Exception $e) {
             \Log::error("Broadcasting failed: " . $e->getMessage());
             // Don't let broadcasting failures prevent the game from working

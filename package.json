@@ -35,6 +35,7 @@
         "lucide-vue-next": "^0.468.0",
         "phaser": "^3.70.0",
         "pinia": "^2.1.7",
+        "pusher-js": "^8.4.0",
         "reka-ui": "^2.2.0",
         "tailwind-merge": "^3.2.0",
         "tailwindcss": "^4.1.1",
@@ -42,9 +43,7 @@
         "typescript": "^5.2.2",
         "vite": "^7.0.4",
         "vue": "^3.5.13",
-        "ziggy-js": "^2.4.2",
-        "ably": "^1.2.50",
-        "pusher-js": "^8.4.0"
+        "ziggy-js": "^2.4.2"
     },
     "optionalDependencies": {
         "@rollup/rollup-linux-x64-gnu": "4.9.5",
