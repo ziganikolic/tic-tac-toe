@@ -1,0 +1,19 @@
+{
+  "name": "ultimate/tic-tac-toe-backend",
+  "type": "project",
+  "require": {
+    "php": "^8.2",
+    "laravel/framework": "^12.0",
+    "predis/predis": "^2.0",
+    "laravel/sanctum": "^4.0",
+    "laravel/reverb": "^1.0"
+  },
+  "scripts": {
+    "test": "php -v"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}
